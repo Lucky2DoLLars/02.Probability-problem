@@ -1,0 +1,22 @@
+sum_over_1_unif = function(){
+  sum_x = 0
+  iter = 0
+  while(sum_x < 1){
+    x = runif(1)
+    sum_x = sum_x + x
+    iter = iter + 1
+  }
+  return(iter)
+}
+
+n = c(10^3,10^4,10^5,10^6,10^7)
+result = rep(NA,length(n))
+for(j in 1:length(n)){
+  temp = rep(NA,n[j])
+  for(i in 1:n[j]){
+    temp[i] = sum_over_1_unif()
+  }
+  result[j] = mean(temp)
+}
+
+abs(result - exp(1))
