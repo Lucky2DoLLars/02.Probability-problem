@@ -1,3 +1,8 @@
+## Problem 1
+## The expectation of sum of Uniform r.v which exceed 1
+## answer = exp(1)
+
+
 sum_over_1_unif = function(){
   sum_x = 0
   iter = 0
@@ -9,7 +14,7 @@ sum_over_1_unif = function(){
   return(iter)
 }
 
-n = c(10^3,10^4,10^5,10^6,10^7)
+n = c(10^3,10^4,10^5,10^6)
 result = rep(NA,length(n))
 for(j in 1:length(n)){
   temp = rep(NA,n[j])
@@ -19,4 +24,5 @@ for(j in 1:length(n)){
   result[j] = mean(temp)
 }
 
-abs(result - exp(1))
+print(result)
+print(abs(result - exp(1)))
