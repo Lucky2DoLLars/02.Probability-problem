@@ -1,0 +1,30 @@
+## Problem 2
+## Birthday matching (case 2)
+
+n= 23
+birthday_matching = function(n){
+  result = list()
+  birthday = sample(1:365,n,replace=TRUE)
+  
+  for(i in 1:(n-1)){
+    result[i] = NA
+    for(j in (i+1):n){
+    result[[i]][j-i] = (birthday[i] == birthday[j])
+    }
+  }
+  
+  sum(unlist(result))
+  out = ( sum(unlist(result))!=0 )
+  return(out)
+}
+
+
+n = 23
+ITER = 10^6
+result = rep(NA,ITER)
+
+for(i in 1:ITER){
+  result[i] = birthday_matching(n)
+}
+
+mean(result)
