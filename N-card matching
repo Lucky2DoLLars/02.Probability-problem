@@ -1,0 +1,23 @@
+## Problem 3
+## N-Card matching
+
+
+N_card_matching = function(N){
+  card = sample(1:N,N,replace=FALSE)
+  player = 1:N
+  
+  if(sum(card==player)!=0){
+    out = TRUE
+  }else{
+    out = FALSE
+  }
+  return(out)
+}
+
+N=29
+ITER = 10^4
+result = rep(NA,ITER)
+for(i in 1:ITER){
+  result[i] = N_card_matching(N)
+  }
+mean(result)
