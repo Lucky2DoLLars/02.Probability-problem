@@ -1,0 +1,33 @@
+## Problme 5
+## Straight in Poker game
+## answer = 0.0039
+
+
+Straight = function(){
+  
+  card = matrix(c(101:113,201:213,301:313,401:413),nrow=4,ncol=13,byrow=TRUE)
+  
+  hand = sample(card, 5)
+  out = FALSE
+  
+  hand_matrix = matrix(NA,2,5)
+  
+  for(i in 1:5){
+    hand_matrix[,i] = c( hand[i] %/% 100, hand[i] %% 100 )
+  }
+  
+  if( length(unique( hand_matrix[1,])) != 1 ){
+    if( ( (sort(hand_matrix[2,])[5] - sort(hand_matrix[2,])[1]) == 4 ) && ( length(unique(hand_matrix[2,])) == 5)){
+      out = TRUE
+    }
+  }
+  return(out)
+}
+
+
+ITER = 10^5
+result = rep(NA,ITER)
+for(i in 1:ITER){
+  result[i] = Straight()
+}
+mean(result)
