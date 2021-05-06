@@ -1,0 +1,32 @@
+## Problem 4
+## Straight flush in Poker game
+## answer = 0.0000139
+
+
+Straight_flush = function(){
+
+  card = matrix(c(101:113,201:213,301:313,401:413),nrow=4,ncol=13,byrow=TRUE)
+  
+  hand = sample(card, 5)
+  out = FALSE
+  
+  for(i in 1:5){
+    hand_matrix[,i] = c( hand[i] %/% 100, hand[i] %% 100 )
+  }
+  
+  if( length(unique( hand_matrix[1,])) == 1 ){
+    if( ( (sort(hand_matrix[2,])[5] - sort(hand_matrix[2,])[1]) == 4 ) && 
+        ( length(unique(hand_matrix[2,])) == 5)){
+      out = TRUE
+    }
+  }
+  return(out)
+}
+
+
+ITER = 10^6
+result = rep(NA,ITER)
+for(i in 1:ITER){
+  result[i] = Straight_flush()
+}
+mean(result)
