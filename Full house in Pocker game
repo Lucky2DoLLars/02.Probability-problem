@@ -1,0 +1,34 @@
+## Problem 6
+## Full-house
+## p = 0.0014
+
+
+Full_house = function(){
+  
+  card = matrix(c(101:113,201:213,301:313,401:413),nrow=4,ncol=13,byrow=TRUE)
+  
+  hand = sample(card, 5)
+  out = FALSE
+  
+  hand_vector = rep(NA,5)
+  
+  for(i in 1:5){
+    hand_vector[i] = ( hand[i] %% 100 )
+  }
+  
+  hand_unique = unique(hand_vector)
+  
+  if( length(hand_unique) == 2 ){
+    if( sum(hand_vector == hand_unique[1]) %in% c(2,3) ){
+      out = TRUE
+    }
+  }
+  return(out)
+}
+
+ITER = 10^5
+result = rep(NA,ITER)
+for(i in 1:ITER){
+  result[i] = Full_house()
+}
+mean(result)
