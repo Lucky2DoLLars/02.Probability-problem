@@ -1,0 +1,27 @@
+## Problem 7
+## Birthday matching (case 3)
+
+birthday_matching_3 = function(n){
+  
+  birthday = sample(1:365, n, replace=TRUE)
+  birthday_unique = unique(birthday)
+  
+  out = FALSE
+  
+  for(i in 1:length(birthday_unique)){
+    num_of_matching = sum( birthday == birthday_unique[i] )
+    if ( num_of_matching >= 3){
+      out = TRUE
+      return(out)
+    }
+  }
+  return(out)
+}
+
+n=88
+ITER = 10^5
+result = rep(NA,ITER)
+for(i in 1:ITER){
+  result[i] = birthday_matching_3(n)
+}
+mean(result)
