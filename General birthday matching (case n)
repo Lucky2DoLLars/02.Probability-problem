@@ -1,0 +1,27 @@
+## Problem 8
+## General birthday matching (case n)
+
+birthday_matching_n = function(n,same=2){
+ 
+  birthday = sample(1:365, n, replace=TRUE)
+  birthday_unique = unique(birthday)
+  
+  out = FALSE
+  
+  for(i in 1:length(birthday_unique)){
+    num_of_matching = sum( birthday == birthday_unique[i] )
+    if ( num_of_matching >= same ){
+      out = TRUE
+      return(out)
+    }
+  }
+  return(out)
+}
+
+n=188
+ITER = 10^4
+result = rep(NA,ITER)
+for(i in 1:ITER){
+  result[i] = birthday_matching_n(n,4)
+}
+mean(result)
