@@ -1,0 +1,22 @@
+## Problem 11
+## Negative Binomial Distribution
+
+
+Negative_binomial = function(r,p){
+  
+  sum = 0
+  n = 0
+  
+  while( sum < r ){
+    sum = sum + sample(c(1,0),size = 1,prob = c(p,1-p))
+    n = n + 1
+  }
+  return(n)
+}
+
+ITER = 10^5
+result = rep(NA,ITER)
+for(i in 1:ITER){
+  result[i] = Negative_binomial(10,1/2)
+}
+mean(result)
