@@ -1,0 +1,18 @@
+# Coin toss
+# tossing coin until {H, T} appear
+
+coin_toss_1 = function(ITER){
+  y = rep(NA, ITER)
+  for (iter in 1:ITER){
+   x_old = sample( c(0,1), 1)
+   x_new = sample( c(0,1), 1)
+   num_of_iter = 2
+   while( !all( c(x_old, x_new)==c(1,0) ) ){
+     num_of_iter = num_of_iter + 1
+     x_old = x_new
+     x_new = sample( c(0,1), 1)
+   }
+   y[iter] = num_of_iter
+  }
+  return(mean(y))
+}
