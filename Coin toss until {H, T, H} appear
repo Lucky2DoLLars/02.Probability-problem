@@ -1,0 +1,22 @@
+coin_toss_HTH = function(ITER){
+  y = rep(NA, ITER)
+  for (iter in 1:ITER){
+    x_1 = sample( c(0,1), 1)
+    x_2 = sample( c(0,1), 1)
+    x_3 = sample( c(0,1), 1)
+    num_of_iter = 3
+    while( !all( c(x_1, x_2, x_3)==c(1,0,1) ) ){
+      num_of_iter = num_of_iter + 1
+      x_1 = x_2
+      x_2 = x_3
+      x_3 = sample( c(0,1), 1)
+    }
+    y[iter] = num_of_iter
+  }
+  return(mean(y))
+}
+
+
+coin_toss_HTH(10^3)
+coin_toss_HTH(10^4)
+coin_toss_HTH(10^5)
