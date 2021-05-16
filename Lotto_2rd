@@ -1,0 +1,19 @@
+lotto_2rd = function(N){
+  
+  y = rep(0,N)
+  for (iter in 1:N){
+    if ( (iter %% 10000)==0 ){
+      cat("n",iter/10000)
+    }
+    balls = 1:45
+    balls_player = sample( balls, 6)
+    balls_result = sample( balls, 7)
+    result_1 = intersect(balls_player,balls_result[-7])
+    result_2 = intersect(balls_player,balls_result[7])
+    if( ( length(result_1)==5 )&( length(result_2)==1 ) ){
+      y[iter] = 1
+    }
+  }
+  Out = mean(y)
+  return(Out)
+}
