@@ -1,0 +1,65 @@
+play_solo = function(board, verbose = TRUE)
+{
+   size = board$size
+   ladders = board$ladders
+   chutes = board$chutes
+   
+   # savings
+   turns = 0
+   space = 0
+   ladder_tally = rep(0, nrow(ladders))
+   chute_tally = rep(0, nrow(chutes))
+   move_log = NULL
+   
+   # repeat until arrive 100
+   while (space < 100)
+   {
+      turns = turns + 1
+      
+      if (verbose == TRUE) cat("Turn", turns, "\n")
+      if (verbose == TRUE) cat("Start at", space, "\n")
+      
+      spin = sample(6, 1)
+      space = spin + space
+      
+      if (space > 100) space = 100
+      
+      if (verbose == TRUE) cat("Spinner:", spin, "\n")
+      
+      logical_ladders = ladders[, 1] == space
+      logical_chutes = chutes[, 1] == space
+      
+      # ladders
+      if (sum(logical_ladders) > 0)
+      {
+         index = which(logical_ladders)
+         if (verbose == TRUE) cat("Landed on:", space, "\n")
+         
+         space = ladders[index, 2]
+         
+         if (verbose == TRUE) cat("Ladder!", "\n")
+         ladder_tally[index] = ladder_tally[index] + 1
+      }
+      
+      # chutes
+      if (sum(logical_chutes) > 0)
+      {
+         index = which(logical_chutes)
+         if (verbose == TRUE) cat("Landed on:", space, "\n")
+         
+         space = chutes[index, 2]
+         
+         if (verbose == TRUE) cat("Chute!", "\n")
+         chute_tally[index] = chute_tally[index] + 1
+      }
+      
+      move_log = c(move_log, space)
+      if (verbose == TRUE) cat("Turn ends at:", space, "\n", "\n")
+   }
+   
+   result_list = list(turns = turns,
+                      chute_tally = chute_tally,
+                      ladder_tally = ladder_tally,
+                      move_log = move_log)
+   return(result_list)
+}
