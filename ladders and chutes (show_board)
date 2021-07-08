@@ -1,0 +1,139 @@
+show_board = function(list)
+{
+   # load basic properties of the board
+   size = list$size
+   ladders = list$ladders
+   chutes = list$chutes
+   
+   # identifying the board has ladders or chutes
+   nrow_ladders = ifelse(class(ladders)[1] == "matrix", nrow(ladders), 0)
+   nrow_chutes = ifelse(class(chutes)[1] == "matrix", nrow(chutes), 0)
+   
+   # object for saving the location of ladders and chutes
+   ladders_location = matrix(NA, nrow = nrow_ladders, ncol = 4)
+   chutes_location = matrix(NA, nrow = nrow_chutes, ncol = 4)
+   
+   plot.new()
+   
+   # plot board
+   plot.window(xlim = c(0, size[1]), ylim = c(0, size[2]), asp = 1)
+   for (h in 0 : size[2]) # horizontal
+   {
+      segments(x0 = 0, y0 = h, x1 = size[1], y1 = h)
+   }
+   for (v in 0 : size[1]) # vertical
+   {
+      segments(x0 = v, y0 = 0, x1 = v, y1 = size[2])
+   }
+   
+   # plot text values
+   for (v in 0 : (size[2] - 1)) # plot text vertical line first
+   {
+      if ( (v %% 2) == 0 ) # identifying the order of text in the vertical line(increasing order)
+      {
+         for (h in 0 : (size[1] - 1))
+         {
+            number = h + 1 + size[1] * v
+            x = h + 0.5
+            y = v + 0.5
+            text(x = x, y = y, labels = number)
+            
+            # finding the location of ladder
+            ladder_idx = matrix(ladders %in% number, nrow = nrow_ladders, ncol = 2)
+            if (sum(ladder_idx) > 0)
+            {
+               ladder_row_idx = which(rowSums(ladder_idx) == 1)
+               if (colSums(ladder_idx)[1] > 0) # identifying starting ladder
+               {
+                  ladders_location[ladder_row_idx, 1 : 2] = c(x, y)
+               }
+               if (colSums(ladder_idx)[2] > 0) # identifying finishing ladder
+               {
+                  ladders_location[ladder_row_idx, 3 : 4] = c(x, y)
+               }
+            }
+            
+            # finding the location of chute
+            chute_idx = matrix(chutes %in% number, nrow = nrow_chutes, ncol = 2)
+            if (sum(chute_idx) > 0)
+            {
+               chute_row_idx = which(rowSums(chute_idx) == 1)
+               if (colSums(chute_idx)[1] > 0) # identifying starting chute
+               {
+                  chutes_location[chute_row_idx, 1 : 2] = c(x, y)
+               }
+               if (colSums(chute_idx)[2] > 0) # identifying finishing chute
+               {
+                  chutes_location[chute_row_idx, 3 : 4] = c(x, y)
+               }
+            }
+         }
+      }
+      else # identifying the order of text in the vertical line(decreasing order)
+      {
+         for (h in 0 : (size[1] - 1))
+         {
+            number = size[1] * (1 + v) - h
+            x = h + 0.5
+            y = v + 0.5
+            text(x = x, y = y, labels = number)
+            
+            # finding the location of ladder
+            ladder_idx = matrix(ladders %in% number, nrow = nrow_ladders, ncol = 2)
+            if (sum(ladder_idx) > 0)
+            {
+               ladder_row_idx = which(rowSums(ladder_idx) == 1)
+               if (colSums(ladder_idx)[1] > 0) # identifying starting ladder
+               {
+                  ladders_location[ladder_row_idx, 1 : 2] = c(x, y)
+               }
+               if (colSums(ladder_idx)[2] > 0) # identifying finishing ladder
+               {
+                  ladders_location[ladder_row_idx, 3 : 4] = c(x, y)
+               }
+            }
+            
+            # finding the location of chute
+            chute_idx = matrix(chutes %in% number, nrow = nrow_chutes, ncol = 2)
+            if (sum(chute_idx) > 0)
+            {
+               chute_row_idx = which(rowSums(chute_idx) == 1)
+               if (colSums(chute_idx)[1] > 0) # identifying starting chute
+               {
+                  chutes_location[chute_row_idx, 1 : 2] = c(x, y)
+               }
+               if (colSums(chute_idx)[2] > 0) # identifying finishing chute
+               {
+                  chutes_location[chute_row_idx, 3 : 4] = c(x, y)
+               }
+            }
+         }
+      }
+   }
+   
+   # drawing arrorws for representing ladders
+   if (nrow_ladders > 0)
+   {
+      for (ladder in 1 : nrow_ladders)
+      {
+         point_0 = ladders_location[ladder, 1 : 2]
+         point_1 = ladders_location[ladder, 3 : 4]
+         
+         arrows(x0 = point_0[1], y0 = point_0[2],
+                x1 = point_1[1], y1 = point_1[2], col = "green")
+      }
+   }
+   
+   # drawing arrorws for representing chutes
+   if (nrow_chutes > 0)
+   {
+      for (chute in 1 : nrow_chutes)
+      {
+         point_0 = chutes_location[chute, 1 : 2]
+         point_1 = chutes_location[chute, 3 : 4]
+         
+         arrows(x0 = point_0[1], y0 = point_0[2],
+                x1 = point_1[1], y1 = point_1[2], col = "red")
+      }
+   }
+}
