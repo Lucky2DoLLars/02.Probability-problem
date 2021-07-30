@@ -1,3 +1,4 @@
-# Probability-problem
+# Probability-problem-R
 
-## Problem 1
+## Introduction
+This reposiotry is for 
