@@ -152,4 +152,4 @@ barplot(Prob, axes = TRUE, las = 2, horiz = TRUE,
         col = "yellow")
 ```
 
-![](Pocker_game_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](/image/pocker_game.png)<!-- -->
